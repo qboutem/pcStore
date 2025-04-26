@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user
+      author: qb
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: location
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: birth_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: ENUM('ACTIVE', 'DISABLED')
+                  constraints:
+                    nullable: false
+
+
+
+

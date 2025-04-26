@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-favorite
+      author: qb
+      preConditions:
+        onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: favorite
+      changes:
+        - createTable:
+            tableName: favorite
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: parent_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: parent_id
+            baseTableCatalogName: peripheralsdata
+            baseTableName: favorite
+            constraintName: fk_peripheral_id
+            referencedColumnNames: id
+            referencedTableCatalogName: peripheralsdata
+            referencedTableName: peripheral
+  - changeSet:
+      id: add-user-id-to-favorite
+      author: qb
+      changes:
+        - addColumn:
+            tableName: favorite
+            columns:
+              - column:
+                  name: user_id
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: favorite
+            constraintName: fk_favorite_user
+            referencedTableName: user
+            referencedColumnNames: email
+
+
+
+
+
+
+

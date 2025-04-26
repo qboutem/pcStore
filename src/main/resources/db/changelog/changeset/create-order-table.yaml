@@ -1,0 +1,76 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-order
+      author: qb
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: total_price
+                  type: float
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user
+                  type: varchar(40)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: user
+            baseTableName: orders
+            constraintName: fk_orders_user
+            referencedTableName: user
+            referencedColumnNames: email
+
+  - changeSet:
+      id: create-order-items
+      author: qb
+      changes:
+        - createTable:
+            tableName: order_items
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: order_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: peripheral_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_order_id
+            baseTableName: order_items
+            baseColumnNames: order_id
+            referencedTableName: orders
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_peripheral_id_in_order_items
+            baseTableName: order_items
+            baseColumnNames: peripheral_id
+            referencedTableName: peripheral
+            referencedColumnNames: id
+
+

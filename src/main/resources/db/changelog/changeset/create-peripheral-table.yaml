@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-peripheral
+      author: qb
+      changes:
+        - createTable:
+            tableName: peripheral
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: brand
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: additional_info
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: float
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image_url
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+databaseChangeLog:
+#  - include:
+#      file: db/changelog/changeset/create-user-table.yaml
+#  - include:
+#      file: db/changelog/changeset/create-peripheral-table.yaml
+#  - include:
+#      file: db/changelog/changeset/create-favorite-table.yaml
+  - include:
+      file: db/changelog/changeset/create-order-table.yaml
+
+
+

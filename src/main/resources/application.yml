@@ -1,0 +1,22 @@
+jwt:
+  lifetime: 4320m
+  secret: ad84831db4f1eae452007841124dae70c4143100215fb4a758120060a9ee5f74f9af04010ea98fa163fd49ee6cffe98393607281e23f67900f000dedf31064e5c050729ddb14863ee8d207ccdbb8b9882ebc2e24477fe5632b7491240fb03e364b5f3c84f9a853e6e5070b1f639fdb3d0282afdde5b1b2b8e069a0579a1d5069
+spring:
+  application:
+    name: ComputerPeripherals
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: gromenko23
+    url: jdbc:mysql://localhost:3306/peripheralsdata
+    username: root
+  jpa:
+    defer-datasource-initialization: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: true
+  sql:
+    init:
+      mode: always
