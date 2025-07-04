@@ -24,6 +24,11 @@
 
 <template>
   <h2 class="text-3xl font-bold mb-8">Моє обране</h2>
-  <CardList :items="favorites" is-favorites/>
+  <div v-if="favorites.length > 0">
+  <CardList :items="favorites" is-favorites />
+  </div>
+  <div v-else class="text-gray-500">
+    Немає обраних товарів.
+  </div>
 </template>
 

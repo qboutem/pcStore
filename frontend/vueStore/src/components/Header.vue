@@ -9,7 +9,6 @@ defineProps({
 })
 </script>
 
-
 <template>
   <header class="flex justify-between border-b border-slate-200 px-8 py-8">
     <RouterLink to="/home">

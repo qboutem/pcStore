@@ -1,5 +1,6 @@
 package com.hromenko.computerperipherals.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +23,6 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "peripheral_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Peripheral peripheral;
 }

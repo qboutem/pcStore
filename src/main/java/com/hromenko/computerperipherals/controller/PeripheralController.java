@@ -68,12 +68,6 @@ public class PeripheralController {
         return favoriteRepository.save(favorite);
     }
 
-    @GetMapping("/favoritesByParent")
-    public ResponseEntity<List<Peripheral>> getAllFavorites() {
-        List<Peripheral> favorites = peripheralRepository.findAllFavoritesWithId();
-        return ResponseEntity.ok(favorites);
-    }
-
     @GetMapping("/favoritesPeripheral")
     public ResponseEntity<List<Peripheral>> getAllFavoritesPeripheral() {
         List<Peripheral> favorites = peripheralRepository.findAllFavourites(
@@ -102,5 +96,10 @@ public class PeripheralController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Peripheral> getPeripheral(@PathVariable Long id) {
+         Peripheral peripheral=peripheralRepository.findById(id).orElseThrow(() -> new RuntimeException("Peripheral not found"));
+         return ResponseEntity.ok(peripheral);
+    }
 }
 

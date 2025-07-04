@@ -23,7 +23,9 @@ const visibleFavoriteButton=Boolean(props.onClickAdd)
          class="absolute"
          @click="onClickFavorite"
     >
+    <RouterLink :to="`/${id}`">
     <img :src="imageUrl" alt="Peripheral" class="w-full object-contain"/>
+    </RouterLink>
     <p class="mt-2"> {{title}}</p>
       <div class="flex justify-between items-center mt-5">
         <div class="flex flex-col">

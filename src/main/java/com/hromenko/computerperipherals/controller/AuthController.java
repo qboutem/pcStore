@@ -3,8 +3,10 @@ package com.hromenko.computerperipherals.controller;
 import com.hromenko.computerperipherals.dto.JwtRequest;
 import com.hromenko.computerperipherals.dto.JwtResponse;
 import com.hromenko.computerperipherals.dto.RegisterRequest;
+import com.hromenko.computerperipherals.dto.UserProfileResponse;
 import com.hromenko.computerperipherals.exceptions.AppError;
 import com.hromenko.computerperipherals.model.User;
+import com.hromenko.computerperipherals.repository.UserRepository;
 import com.hromenko.computerperipherals.service.JwtService;
 import com.hromenko.computerperipherals.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.time.LocalDate;
 
 @RestController
@@ -33,6 +37,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
@@ -82,6 +87,25 @@ public class AuthController {
     public boolean checkToken() {
         System.out.println(SecurityContextHolder.getContext().getAuthentication());
         return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<UserProfileResponse> getCurrentUser(Principal principal){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow();
+
+        UserProfileResponse dto = new UserProfileResponse();
+        dto.setName(user.getName());
+        dto.setSurname(user.getSurname());
+        dto.setEmail(user.getEmail());
+        dto.setPhoneNumber(user.getPhoneNumber());
+        dto.setLocation(user.getLocation());
+        dto.setBirthDate(user.getBirthDate().toString());
+
+        return ResponseEntity.ok(dto);
     }
 
 }

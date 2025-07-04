@@ -4,8 +4,8 @@ import axios from "axios";
 import {onMounted, reactive, ref, watch} from "vue";
 import {inject} from "vue";
 
-
 const {cart, addToCart, removeFromCart} = inject('cart')
+const { addToFavorite } = inject('favorites');
 const items = ref([]);
 
 const filters = reactive({
@@ -26,35 +26,6 @@ const onClickAddPlus = (item) => {
     addToCart(item);
   } else {
     removeFromCart(item);
-  }
-}
-
-const addToFavorite = async (item) => {
-  try {
-    item.isFavorite = !item.isFavorite;
-    if (item.isFavorite) {
-      const obj = {
-        parentId: item.id,
-      };
-      const {data} = await axios.post('http://localhost:8080/favorites', obj,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-          })
-      item.favoriteId = data.id;
-      console.log(data);
-    } else {
-      await axios.delete(`http://localhost:8080/favorites/${item.favoriteId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-          })
-      item.favoriteId = null;
-    }
-  } catch (err) {
-    console.log(err)
   }
 }
 

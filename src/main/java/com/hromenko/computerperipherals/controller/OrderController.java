@@ -1,6 +1,8 @@
 package com.hromenko.computerperipherals.controller;
 
+import com.hromenko.computerperipherals.dto.FavoriteResponse;
 import com.hromenko.computerperipherals.dto.OrderRequest;
+import com.hromenko.computerperipherals.model.Favorite;
 import com.hromenko.computerperipherals.model.Order;
 import com.hromenko.computerperipherals.model.OrderItem;
 import com.hromenko.computerperipherals.model.Peripheral;
@@ -9,11 +11,14 @@ import com.hromenko.computerperipherals.repository.PeripheralRepository;
 import com.hromenko.computerperipherals.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -59,5 +64,11 @@ public class OrderController {
         return ResponseEntity.ok(order);
     }
 
+    @GetMapping("/getOrders")
+    public ResponseEntity<List<Order>> getOrders(Principal principal) {
+        String email = principal.getName();
+        List<Order> orders = orderRepository.findByUser(email);
+        return ResponseEntity.ok(orders);
+    }
 }
 

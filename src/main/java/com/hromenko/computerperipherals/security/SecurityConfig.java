@@ -51,6 +51,7 @@ public class SecurityConfig {
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/api/peripherals/{id}/image").authenticated()
                                 .requestMatchers("/favoritesByParent").permitAll()
+                                .requestMatchers("/getOrders").authenticated()
                                 .anyRequest()
                                 .authenticated())
                 .addFilterAt(initialAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
